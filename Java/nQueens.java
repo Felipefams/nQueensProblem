@@ -10,7 +10,7 @@ import Java.entities.inputOutput;
  * so I basically gave up trying and started just taking quick looks at it occasionally, but yesterday 04/02/2022(dd/MM/yyyy)
  * I had an idea popping into my mind and did it. So anyway, I am very proud of the results, and hope the code works for everyone */
 public class nQueens {
-    //this class is only defined, so we can use grid size as a global variable
+    //this class is only defined so we can use grid size as a global variable
     public static class Sizes {
         public static int grid_Size;
     }
