@@ -1,9 +1,5 @@
 package Java;
-
-import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-
+import Java.entities.inputOutput;
 /*
  * My solution to the classical nQueens problem, in this case, I believe the algorithm
  * can work for both mandatory and non-mandatory queen position (with a few changing on user input),
@@ -14,181 +10,7 @@ import java.nio.charset.StandardCharsets;
  * so I basically gave up trying and started just taking quick looks at it occasionally, but yesterday 04/02/2022(dd/MM/yyyy)
  * I had an idea popping into my mind and did it. So anyway, I am very proud of the results, and hope the code works for everyone */
 public class nQueens {
-    public static class inputOutput {
-
-        private static BufferedReader in = new BufferedReader(
-                new InputStreamReader(System.in, StandardCharsets.ISO_8859_1));
-        private static String charset = "ISO-8859-1";
-
-        public static void setCharset(String charset_) {
-            charset = charset_;
-            in = new BufferedReader(new InputStreamReader(System.in, Charset.forName(charset)));
-        }
-
-        public static double readDouble() {
-            double d = -1;
-            try {
-                d = Double.parseDouble(readString().trim().replace(",", "."));
-            } catch (Exception ignored) {
-            }
-            return d;
-        }
-
-        public static double readDouble(String str) {
-            try {
-                PrintStream out = new PrintStream(System.out, true, charset);
-                out.print(str);
-            } catch (UnsupportedEncodingException e) {
-                System.out.println("Erro: charset invalido");
-            }
-            return readDouble();
-        }
-
-        public static float readFloat() {
-            return (float) readDouble();
-        }
-
-        public static float readFloat(String str) {
-            return (float) readDouble(str);
-        }
-
-        public static int readInt() {
-            int i = -1;
-            try {
-                i = Integer.parseInt(readString().trim());
-            } catch (Exception ignored) {
-            }
-            return i;
-        }
-
-        public static int readInt(String str) {
-            try {
-                PrintStream out = new PrintStream(System.out, true, charset);
-                out.print(str);
-            } catch (UnsupportedEncodingException e) {
-                System.out.println("Erro: charset invalido");
-            }
-            return readInt();
-        }
-
-        public static String readString() {
-            StringBuilder s = new StringBuilder();
-            char tmp;
-            try {
-                do {
-                    tmp = (char) in.read();
-                    if (tmp != '\n' && tmp != ' ' && tmp != 13) {
-                        s.append(tmp);
-                    }
-                } while (tmp != '\n' && tmp != ' ');
-            } catch (IOException ioe) {
-                System.out.println("lerPalavra: " + ioe.getMessage());
-            }
-            return s.toString();
-        }
-
-        public static String readString(String str) {
-            try {
-                PrintStream out = new PrintStream(System.out, true, charset);
-                out.print(str);
-            } catch (UnsupportedEncodingException e) {
-                System.out.println("Erro: charset invalido");
-            }
-            return readString();
-        }
-
-        public static String readLine() {
-            String s = "";
-            char tmp;
-            try {
-                do {
-                    tmp = (char) in.read();
-                    if (tmp != '\n' && tmp != 13) {
-                        s += tmp;
-                    }
-                } while (tmp != '\n');
-            } catch (IOException ioe) {
-                System.out.println("lerPalavra: " + ioe.getMessage());
-            }
-            return s;
-        }
-
-        public static String readLine(String str) {
-            try {
-                PrintStream out = new PrintStream(System.out, true, charset);
-                out.print(str);
-            } catch (UnsupportedEncodingException e) {
-                System.out.println("Erro: charset invalido");
-            }
-            return readLine();
-        }
-
-        public static char readChar() {
-            char resp = ' ';
-            try {
-                resp = (char) in.read();
-            } catch (Exception ignored) {
-            }
-            return resp;
-        }
-
-        public static char readChar(String str) {
-            try {
-                PrintStream out = new PrintStream(System.out, true, charset);
-                out.print(str);
-            } catch (UnsupportedEncodingException e) {
-                System.out.println("Erro: charset invalido");
-            }
-            return readChar();
-        }
-
-        public static boolean readBoolean() {
-            boolean resp = false;
-            String str = "";
-
-            try {
-                str = readString();
-            } catch (Exception ignored) {
-            }
-
-            if (str.equals("true") || str.equals("TRUE") || str.equals("t") || str.equals("1") ||
-                    str.equals("verdadeiro") || str.equals("VERDADEIRO") || str.equals("V")) {
-                resp = true;
-            }
-
-            return resp;
-        }
-
-        public static boolean readBoolean(String str) {
-            try {
-                PrintStream out = new PrintStream(System.out, true, charset);
-                out.print(str);
-            } catch (UnsupportedEncodingException e) {
-                System.out.println("Erro: charset invalido");
-            }
-            return readBoolean();
-        }
-
-        public static void pause() {
-            try {
-                in.read();
-            } catch (Exception ignored) {
-            }
-        }
-
-        public static void pause(String str) {
-            try {
-                PrintStream out = new PrintStream(System.out, true, charset);
-                out.print(str);
-            } catch (UnsupportedEncodingException e) {
-                System.out.println("Erro: charset invalido");
-            }
-            pause();
-        }
-
-    }
-
-    // this class is only defined, so we can use grid size as a global variable
+    //this class is only defined, so we can use grid size as a global variable
     public static class Sizes {
         public static int grid_Size;
     }
@@ -223,12 +45,10 @@ public class nQueens {
     }
 
     /*
-     * so, I am not going to comment everything, since the code is pretty
-     * straightforward,but the
-     * idea behind these isValidMethods() is that we check whether we have a queen
-     * on a position we shouldn't
-     * ,and they are divided for purely organization purposes
-     */
+    so, I am not going to comment everything, since the code is pretty straightforward,but the
+    idea behind these isValidMethods() is that we check whether we have a queen on a position we shouldn't
+    ,and they are divided for purely organization purposes
+    */
     public static boolean isValidHorizontal(char[][] board, int row, int column) {
         for (int x = 0; x < Sizes.grid_Size; x++) {
             if (board[row][x] == 'Q') {
@@ -247,66 +67,52 @@ public class nQueens {
         return true;
     }
     /*
-     * also, I want to talk about this part, because that was my first approach to
-     * check the diagonals,
-     * so I will let it here in case someone needs it. Basically it was based on a
-     * formula I came up with,
-     * to find if the queens are on the same diagonals, looking at it now, the first
-     * error I see is that I
-     * am not using the Math.abs() function, so when we compare a negative value
-     * with a positive one, the result
-     * will be false even though it should be true. I will keep these methods here
-     * as comments.
-     * 
-     * public static boolean isValid_RightDiagonal(char[][] board, int row, int
-     * column) {
-     * for (int x = 0; x < Sizes.grid_Size; x++) {
-     * for (int y = 0; y < Sizes.grid_Size; y++) {
-     * //when going down to the right
-     * if (x - y == row && board[x][y] == 'Q') {
-     * return false;
-     * }
-     * }
-     * }
-     * return true;
-     * }
-     * 
-     * public static boolean isValid_LeftDiagonal(char[][] board, int row, int
-     * column) {
-     * for (int x = 0; x < Sizes.grid_Size; x++) {
-     * for (int y = 0; y < Sizes.grid_Size; y++) {
-     * //when going down to the left
-     * if (x + y == row + column && board[x][y] == 'Q') {
-     * return false;
-     * }
-     * }
-     * }
-     * return true;
-     * }
-     */
+    * also, I want to talk about this part, because that was my first approach to check the diagonals,
+    * so I will let it here in case someone needs it. Basically it was based on a formula I came up with,
+    * to find if the queens are on the same diagonals, looking at it now, the first error I see is that I
+    * am not using the Math.abs() function, so when we compare a negative value with a positive one, the result
+    * will be false even though it should be true. I will keep these methods here as comments.
+
+    public static boolean isValid_RightDiagonal(char[][] board, int row, int column) {
+        for (int x = 0; x < Sizes.grid_Size; x++) {
+            for (int y = 0; y < Sizes.grid_Size; y++) {
+                //when going down to the right
+                if (x - y == row && board[x][y] == 'Q') {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static boolean isValid_LeftDiagonal(char[][] board, int row, int column) {
+        for (int x = 0; x < Sizes.grid_Size; x++) {
+            for (int y = 0; y < Sizes.grid_Size; y++) {
+                //when going down to the left
+                if (x + y == row + column && board[x][y] == 'Q') {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    */
 
     /*
-     * checks diagonals in both sides, left and right.
+    checks diagonals in both sides, left and right.
      */
     public static boolean isValid_Diagonal(char[][] board, int row, int column) {
         for (int x = 0; x < Sizes.grid_Size; x++) {
             for (int y = 0; y < Sizes.grid_Size; y++) {
-                /*
-                 * actually, I was doing a lot of wrong stuff here, basically my backtrack was
-                 * alright,
-                 * but I was messing things up when checking the diagonals, it took me so long
-                 * to realize that
-                 * I was checking them the wrong way.
-                 * the funny part, is that I came up with this idea down below when I thought
-                 * about a problem
-                 * I had solved long before. The problem was about finding the minimum amount of
-                 * steps a man
-                 * would need to take if he wanted to move from a coordinate A to a coordinate
-                 * B, and it resulted
-                 * in a similar formula.
-                 * you can validate this formula in a board I wrote as comment at the end of the
-                 * code.
-                 */
+                /*actually, I was doing a lot of wrong stuff here, basically my backtrack was alright,
+                  but I was messing things up when checking the diagonals, it took me so long to realize that
+                  I was checking them the wrong way.
+                * the funny part, is that I came up with this idea down below when I thought about a problem
+                * I had solved long before. The problem was about finding the minimum amount of steps a man
+                * would need to take if he wanted to move from a coordinate A to a coordinate B, and it resulted
+                * in a similar formula.
+                * you can validate this formula in a board I wrote as comment at the end of the code.
+                */
                 int diffRow = Math.abs(row - x);
                 int diffColumn = Math.abs(column - y);
                 if (board[x][y] == 'Q' && diffRow == diffColumn) {
@@ -318,8 +124,7 @@ public class nQueens {
     }
 
     /*
-     * Nothing amazing here, just checking if the queen can be placed in the
-     * position
+     * Nothing amazing here, just checking if the queen can be placed in the position
      */
     public static boolean isValidPlacement(char[][] board, int row, int column) {
         return isValidHorizontal(board, row, column) &&
@@ -328,22 +133,20 @@ public class nQueens {
     }
 
     /*
-     * and here comes the backtracking idea, and to be honest, that wasn't really
-     * hard, since I already had
-     * the experience from sudoku, understanding the recursion there wasn't as hard
-     * as it was on the first time.
-     */
+     * and here comes the backtracking idea, and to be honest, that wasn't really hard, since I already had
+     * the experience from sudoku, understanding the recursion there wasn't as hard as it was on the first time.
+     * */
     public static boolean solveBoard(char[][] board, int queenCount) {
-        // basically we are running through the board, and checking if a spot is open
+        //basically we are running through the board, and checking if a spot is open
         for (int row = 0; row < Sizes.grid_Size; row++) {
             for (int column = 0; column < Sizes.grid_Size; column++) {
-                // so, if a spot is open
+                //so, if a spot is open
                 if (board[row][column] == '-') {
-                    // we check if this is spot is a valid placement
+                    //we check if this is spot is a valid placement
                     if (isValidPlacement(board, row, column)) {
-                        // and if it is a valid placement, we put a queen there.
+                        //and if it is a valid placement, we put a queen there.
                         board[row][column] = 'Q';
-                        // ok, but what if we can't solve the board with a queen in this position?
+                        //ok, but what if we can't solve the board with a queen in this position?
                         /*
                          * here is when recursion comes in handy, basically, we are checking if we
                          * can solve the board in the given position, if we can't, we set the place as
@@ -359,38 +162,35 @@ public class nQueens {
                 }
             }
         }
-        /*
-         * so this right here, guarantees that we loop until we get N queens on the NxN
-         * board,
-         * otherwise, the code would stop before reaching the N queens, since we can
-         * easily have
-         * a solution using fewer queens on a bigger board.
+        /*so this right here, guarantees that we loop until we get N queens on the NxN board,
+         *otherwise, the code would stop before reaching the N queens, since we can easily have
+         *a solution using fewer queens on a bigger board.
          */
         return queenCount == Sizes.grid_Size;
     }
     /*
-     * 0,0 | 0,1 | 0,2 | 0,3| 0,4| 0,5| 0,6| 0,7|
-     * 1,0 | 1,1 | 1,2 | 1,3| 1,4| 1,5| 1,6| 1,7|
-     * 2,0 | 2,1 | 2,2 | 2,3| 2,4| 2,5| 2,6| 2,7|
-     * 3,0 | 3,1 | 3,2 | 3,3| 3,4| 3,5| 3,6| 3,7|
-     * 4,0 | 4,1 | 4,2 | 4,3| 4,4| 4,5| 4,6| 4,7|
-     * 5,0 | 5,1 | 5,2 | 5,3| 5,4| 5,5| 5,6| 5,7|
-     * 6,0 | 6,1 | 6,2 | 6,3| 6,4| 6,5| 6,6| 6,7|
-     * 7,0 | 7,1 | 7,2 | 7,3| 7,4| 7,5| 7,6| 7,7|
+    0,0 | 0,1 | 0,2 | 0,3| 0,4| 0,5| 0,6| 0,7|
+    1,0 | 1,1 | 1,2 | 1,3| 1,4| 1,5| 1,6| 1,7|
+    2,0 | 2,1 | 2,2 | 2,3| 2,4| 2,5| 2,6| 2,7|
+    3,0 | 3,1 | 3,2 | 3,3| 3,4| 3,5| 3,6| 3,7|
+    4,0 | 4,1 | 4,2 | 4,3| 4,4| 4,5| 4,6| 4,7|
+    5,0 | 5,1 | 5,2 | 5,3| 5,4| 5,5| 5,6| 5,7|
+    6,0 | 6,1 | 6,2 | 6,3| 6,4| 6,5| 6,6| 6,7|
+    7,0 | 7,1 | 7,2 | 7,3| 7,4| 7,5| 7,6| 7,7|
      */
-    /*
-     * that's the old board i used for tests, ill keep it here
-     * in case i need it for something.
-     * 
-     * char[][] board = {
-     * {'-', '-', '-', '-', '-', '-', '-', '-'},
-     * {'-', '-', '-', '-', '-', '-', '-', '-'},
-     * {'-', '-', '-', '-', '-', '-', '-', '-'},
-     * {'-', '-', '-', '-', '-', '-', '-', '-'},
-     * {'-', '-', '-', '-', '-', '-', '-', '-'},
-     * {'-', '-', '-', '-', '-', '-', '-', '-'},
-     * {'-', '-', '-', '-', '-', '-', '-', '-'},
-     * {'-', '-', '-', '-', '-', '-', '-', '-'}
-     */
+    /*      that's the old board i used for tests, ill keep it here
+                in case i need it for something.
+
+                char[][] board = {
+                {'-', '-', '-', '-', '-', '-', '-', '-'},
+                {'-', '-', '-', '-', '-', '-', '-', '-'},
+                {'-', '-', '-', '-', '-', '-', '-', '-'},
+                {'-', '-', '-', '-', '-', '-', '-', '-'},
+                {'-', '-', '-', '-', '-', '-', '-', '-'},
+                {'-', '-', '-', '-', '-', '-', '-', '-'},
+                {'-', '-', '-', '-', '-', '-', '-', '-'},
+                {'-', '-', '-', '-', '-', '-', '-', '-'}
+                */
+
 
 }
